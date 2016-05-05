@@ -15,17 +15,14 @@ function setup() {
 	strokeWeight(4);
 	//ship properties
 	ship = createSprite(width/2, height/2, 30, 30);
-	ship.shapeColor = color(0, 123, 255);
+	ship.shapeColor = color(0, 128, 255);
 	ship.rotateToDirection = true;
-	ship.maxSpeed = 40;
-	ship.friction = .95;
+	ship.maxSpeed = 20;
+	//ship.friction = .96;
 }
 function draw() {
-	background(123);
-	if(keyWentDown('p')) {
-		ship.visible = !ship.visible;
-	}
-
+	//background(123);
+	
 	if(ship.position.x <= 0)
 		ship.position.x += width;
 	if(ship.position.y <= 0)
@@ -33,17 +30,27 @@ function draw() {
 	
 	ship.position.x %= width;
 	ship.position.y %= height;
+
+
+
+
 	/*
-	ship.shapeColor = color((red(ship.shapeColor) + 1) % 255,
-							(green(ship.shapeColor) + 1) % 255,
-							(blue(ship.shapeColor) + 1) % 255
-							);
+	var redC = red(ship.shapeColor);
+	var greenC = green(ship.shapeColor);
+	var blueC = blue(ship.shapeColor);
 	*/
+	ship.shapeColor = color(green(ship.shapeColor),
+							blue(ship.shapeColor),
+							red(ship.shapeColor)
+							
+							);
+	//*/
 
-	if(mouseIsPressed) {
-		ship.attractionPoint(1, mouseX, mouseY);
+	if(keyDown('1')) {
+		ship.attractionPoint(2, mouseX, mouseY);
+		console.log("test");
 	}
-
+	//ship.attractionPoint(5, random(width), random(height));
 
 	drawSprites();
 }
