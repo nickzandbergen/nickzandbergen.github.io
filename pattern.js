@@ -13,7 +13,7 @@ function setup() {
 
 function draw() {
     
-    if(frameCount % 360 >= 180) {
+    if(frameCount % 180 >= 90) {
         background(0);
         drawSquaresSquared(true);0
         drawSquaresSquared(false);
