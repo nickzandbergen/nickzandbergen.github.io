@@ -7,6 +7,7 @@ function setup() {
     createCanvas(480, 720);
     noStroke();
     angleMode(DEGREES);
+    rectMode(CENTER);
     size = width/squares;
     var rotate = 128 ;
     
@@ -31,7 +32,7 @@ function draw() {
 function drawSquaresSquared(rotation, black) {
     var offset = 0;
     if(!black)
-        offset = size * Math.SQRT2 / 2;
+        offset = size / Math.SQRT2;
         
         
     
