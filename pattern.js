@@ -23,7 +23,7 @@ function draw() {
     
     if (rotate % 360 == 0)
         rotate = 0;
-    
+    rotate++
     
 } //end of draw 
 
@@ -35,8 +35,8 @@ function drawSquaresSquared(rotation, black) {
         
         
     
-    for(var i = 0; i < width; i += size * 2 * Math.SQRT2) {
-        for(var j = 0; j < height; j += size * 2 * Math.SQRT2) {
+    for(var i = 0; i < width; i += size *  Math.SQRT2) {
+        for(var j = 0; j < height; j += size *  Math.SQRT2) {
             drawSquare(i + offset, j + offset, rotation , black)
             
             
