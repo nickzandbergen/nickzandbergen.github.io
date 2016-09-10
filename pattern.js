@@ -1,6 +1,5 @@
 var squares = 20;//change this! 
 var size;
-var rotation;
 
 
 function setup() {
