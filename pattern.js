@@ -13,7 +13,7 @@ function setup() {
 
 function draw() {
     
-    if(frameCount % 360 > 135) {
+    if(frameCount % 360 >= 180) {
         background(255);
         drawSquaresSquared(true);0
         drawSquaresSquared(false);
@@ -54,7 +54,7 @@ function drawSquare(x, y, black) {
     push();
     
     translate(x,y);
-    rotate(frameCount);
+    rotate(frameCount + 45);
     
     if (black) {
        fill(0); 
