@@ -9,7 +9,7 @@ function setup() {
     angleMode(DEGREES);
     rectMode(CENTER);
     size = width/squares;
-    var rotate = 128 ;
+    var rotate = 0 ;
     
 }
 
@@ -51,8 +51,10 @@ function drawSquaresSquared(rotation, black) {
 }
 function drawSquare(x, y, rotation, black) {
     push();
+    
     translate(x,y);
     rotate(rotation);
+    
     if (black) {
        fill(0); 
     } else {
