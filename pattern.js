@@ -8,8 +8,7 @@ function setup() {
     angleMode(DEGREES);
     rectMode(CENTER);
     size = width/squares;
-    var rotate = 0 ;
-    
+
 }
 
 function draw() {
@@ -21,14 +20,11 @@ function draw() {
     drawSquaresSquared(rotate, true);
 
     
-    if (rotate % 360 == 0)
-        rotate = 0;
-    rotate++
     
 } //end of draw 
 
 
-function drawSquaresSquared(rotation, black) {
+function drawSquaresSquared(black) {
     var offset = 0;
     if(!black)
         offset = size / Math.SQRT2;
@@ -37,7 +33,7 @@ function drawSquaresSquared(rotation, black) {
     
     for(var i = 0; i < width; i += size *  Math.SQRT2) {
         for(var j = 0; j < height; j += size *  Math.SQRT2) {
-            drawSquare(i + offset, j + offset, rotation , black)
+            drawSquare(i + offset, j + offset , black)
             
             
             
@@ -48,11 +44,11 @@ function drawSquaresSquared(rotation, black) {
     
     
 }
-function drawSquare(x, y, rotation, black) {
+function drawSquare(x, y, black) {
     push();
     
     translate(x,y);
-    //rotate(rotation);
+    rotate(frameCount);
     
     if (black) {
        fill(0); 
