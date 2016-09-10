@@ -16,8 +16,8 @@ function draw() {
     
     background(128);
     
-    drawSquaresSquared(rotate, false);
-    drawSquaresSquared(rotate, true);
+    drawSquaresSquared(false);
+    drawSquaresSquared(true);
 
     
     
