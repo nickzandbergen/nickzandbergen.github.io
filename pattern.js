@@ -52,7 +52,7 @@ function drawSquare(x, y, rotation, black) {
     push();
     
     translate(x,y);
-    rotate(rotation);
+    //rotate(rotation);
     
     if (black) {
        fill(0); 
