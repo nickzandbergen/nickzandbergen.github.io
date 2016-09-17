@@ -1,9 +1,9 @@
-var squares = 10;//change this! 
+var squares = 5;//change this! 
 var size;
 
 
 function setup() {
-    createCanvas(480, 720);
+    createCanvas(720, 720);
     noStroke();
     angleMode(DEGREES);
     rectMode(CENTER);
