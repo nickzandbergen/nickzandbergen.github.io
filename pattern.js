@@ -1,33 +1,28 @@
-var squares = 5;//change this! 
+var squares = 9;//change this! 
 var size;
 
 
 function setup() {
-    createCanvas(720, 720);
+    createCanvas(1080, 720);
     noStroke();
     angleMode(DEGREES);
     rectMode(CENTER);
     size = width/squares;
-
 }
 
 function draw() {
     
     if(frameCount % 180 >= 90) {
         background(0);
-        drawSquaresSquared(true);0
+        drawSquaresSquared(true);
         drawSquaresSquared(false);
     } else {
         background(255)
         drawSquaresSquared(false);
         drawSquaresSquared(true);
     }
-    
-    
 
-    
-    
-} //end of draw 
+} 
 
 
 function drawSquaresSquared(black) {
@@ -35,19 +30,11 @@ function drawSquaresSquared(black) {
     if(!black)
         offset = size / Math.SQRT2;
         
-        
-    
     for(var i = 0; i < width; i += size *  Math.SQRT2) {
         for(var j = 0; j < height; j += size *  Math.SQRT2) {
             drawSquare(i + offset, j + offset , black)
-            
-            
-            
-            
-            
         }
     }
-    
     
 }
 function drawSquare(x, y, black) {
