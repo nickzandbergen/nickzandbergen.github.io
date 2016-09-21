@@ -12,12 +12,12 @@ function setup() {
 
 function draw() {
     
-    if(frameCount % 180 >= 90) {
-        background(255);
+    if(frameCount % 180 > 90) {
+        background(0);
         drawSquaresSquared(true);
         drawSquaresSquared(false);
     } else {
-        background(0)
+        background(255)
         drawSquaresSquared(false);
         drawSquaresSquared(true);
     }
@@ -48,7 +48,9 @@ function drawSquare(x, y, black) {
     } else {
         fill(255);
     }
-    rect(0,0,size, size);
+    
+    var local_size = size * (.9 + (.1 * math.abs(45 - (framecount % 90))/45)
+    rect(0,0,local_size, local_size);
     
     pop();
     
