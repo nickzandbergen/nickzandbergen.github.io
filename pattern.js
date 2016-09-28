@@ -46,10 +46,10 @@ function drawSquare(x, y, black) {
     if (black) {
        fill(0); 
     } else {
-        fill(255);
+       fill(255);
     }
     
-    var local_size = size * (.9 + (.1 * math.abs(45 - (framecount % 90)))/45)
+    var local_size = size * (.9 + (.1 * math.abs(45 - (framecount % 90)))/45);
     rect(0,0,local_size, local_size);
     
     pop();
