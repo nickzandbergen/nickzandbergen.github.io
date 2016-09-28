@@ -17,7 +17,7 @@ function draw() {
         drawSquaresSquared(true);
         drawSquaresSquared(false);
     } else {
-        background(255)
+        background(255);
         drawSquaresSquared(false);
         drawSquaresSquared(true);
     }
