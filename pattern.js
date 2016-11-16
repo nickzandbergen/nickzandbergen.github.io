@@ -48,8 +48,10 @@ function drawSquaresSquared(black) {
                 y += (frameCount * size) / 90;
                 if (x > width) {
                     x = width - x;
+                    y = 0;
                 } else if (y > height) {
                     y = height - y;
+                    x = 0;
                 }
             }
             drawSquare(x, y, black);
