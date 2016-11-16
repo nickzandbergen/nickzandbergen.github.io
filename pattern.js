@@ -1,4 +1,4 @@
-var squares = 3;//change this! 
+var squares = 20;//change this! 
 var size;
 
 
@@ -7,7 +7,7 @@ function setup() {
     noStroke();
     angleMode(DEGREES);
     rectMode(CENTER);
-    size = (int) (width/squares);
+    size = width/squares;
 }
 
 function draw() {
