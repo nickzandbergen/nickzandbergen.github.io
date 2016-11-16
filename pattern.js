@@ -12,17 +12,17 @@ function setup() {
 
 function draw() {
     
-    if(frameCount % 360 > 90) {
+    if(frameCount % 360 >= 90) {
         background(255);
         drawSquaresSquared(true);
         drawSquaresSquared(false);
-    } else if(frameCount % 360 > 180) {
+    } else if(frameCount % 360 >= 180) {
         background(0);
         drawSquaresSquared(false);
         drawSquaresSquared(true);
-    } else if(frameCount % 360 > 270) {
+    } else if(frameCount % 360 >= 270) {
         
-    } else {//defualt case, 90 < frameCount <= 0
+    } else {//defualt case, 90 > frameCount >= 0
         
     }
 
@@ -32,10 +32,10 @@ function draw() {
 function drawSquaresSquared(black) {
     var offset = 0;
     if(!black)
-        offset = size;
+        offset = size / Math.SQRT2;
         
-    for(var i = 0; i < width; i += size) {
-        for(var j = 0; j < height; j += size) {
+    for(var i = 0; i < width; i += size * Math.SQRT2) {
+        for(var j = 0; j < height; j += size * Math.SQRT2) {
             drawSquare(i + offset, j + offset, black);
         }
     }
