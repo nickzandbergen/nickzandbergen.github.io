@@ -7,7 +7,7 @@ function setup() {
     noStroke();
     angleMode(DEGREES);
     rectMode(CENTER);
-    size = width/squares;
+    size = (int) (width/squares);
 }
 
 function draw() {
@@ -34,9 +34,9 @@ function drawSquaresSquared(black) {
     if(!black)
         offset = size / Math.SQRT2;
         
-    for(var i = 0; i < width; i += size) {
-        for(var j = 0; j < height; j += size) {
-            drawSquare(i * Math.SQRT2 + offset - 1, j * Math.SQRT2 + offset - 1, black);
+    for(var i = 0; i < squares; i += 1) {
+        for(var j = 0; j < squares; j += 1) {
+            drawSquare(i * size * Math.SQRT2 + offset, j * size * Math.SQRT2 + offset, black);
         }
     }
     
