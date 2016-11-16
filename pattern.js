@@ -32,11 +32,11 @@ function draw() {
 function drawSquaresSquared(black) {
     var offset = 0;
     if(!black)
-        offset = size / Math.SQRT2;
+        offset = size;
         
-    for(var i = 0; i < width; i += size *  Math.SQRT2) {
-        for(var j = 0; j < height; j += size *  Math.SQRT2) {
-            drawSquare(i + offset + (i % 2) * 2, j + offset + (j % 2) * 2, black);
+    for(var i = 0; i < width; i += size) {
+        for(var j = 0; j < height; j += size) {
+            drawSquare(i + offset, j + offset, black);
         }
     }
     
@@ -45,7 +45,7 @@ function drawSquare(x, y, black) {
     push();
     
     translate(x,y);
-    rotate(frameCount + 45);
+    rotate(frameCount);
     
     if (black) {
        fill(0); 
