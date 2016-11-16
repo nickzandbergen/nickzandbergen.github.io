@@ -45,21 +45,25 @@ function drawSquaresSquared(black) {
 function drawSquare(x, y, black) {
     push();
     
+    var speedX, speedY;
+    
     if (black) {
        fill(0); 
-       x += size / 90;
-       y += size / 90;
+       speedX = size / 90;
+       speedY = size / 90;
     } else {
        fill(255);
+       speedX = 0;
+       speedY = 0;
     }
     
     if (x - size > width) {
-        x = 0; 
+        x = -size; 
     } else if (y - size > height) {
-        y = 0;   
+        y = size;   
     }
     
-    translate(x, y);
+    translate(x + speedX, y + speedY);
     rotate(frameCount + 45);
     
     rect(0,0,size, size);
