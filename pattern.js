@@ -43,13 +43,9 @@ function drawSquaresSquared(black) {
         for(var j = 0; j < squares; j += 1) {
             x = i * size * Math.SQRT2;
             y = j * size * Math.SQRT2;
-            if (black) {
+            if (black && frameCount % 90 == 0) {
                 x += (frameCount * size) / 90;
                 y += (frameCount * size) / 90;
-                if (x > width || y > height) {
-                    x = width - x;
-                    y = height - y;
-                }
             }
             drawSquare(x, y, black);
         }
