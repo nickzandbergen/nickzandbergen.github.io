@@ -58,10 +58,10 @@ function drawSquare(x, y, black) {
     }
     
     
-    if (x - size > width) {
-        x = -size; 
-    } else if (y - size > height) {
-        y = -size;   
+    if (x > width) {
+        x = 0; 
+    } else if (y > height) {
+        y = 0;   
     }
     
     translate(x, y);
