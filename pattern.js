@@ -20,11 +20,11 @@ function draw() {
         background(0);
         drawSquaresSquared(false);
         drawSquaresSquared(true);
-    } else if(frameCount % 360 >= 270) {
+    //} else if(frameCount % 360 >= 270) {
         background(255);
         drawSquaresSquared(true);
         drawSquaresSquared(false);
-    } else {//defualt case, 90 > frameCount >= 0
+    //} else {//defualt case, 90 > frameCount >= 0
         background(0);
         drawSquaresSquared(false);
         drawSquaresSquared(true);
