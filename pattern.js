@@ -12,15 +12,15 @@ function setup() {
 
 function draw() {
     
-    if(frameCount % 360 >= 91) {
+    if(frameCount % 360 >= 90) {
         background(128);
         drawSquaresSquared(true);
         drawSquaresSquared(false);
-    } else if(frameCount % 360 >= 181) {
+    } else if(frameCount % 360 >= 180) {
         background(128);
         drawSquaresSquared(false);
         drawSquaresSquared(true);
-    } else if(frameCount % 360 >= 271) {
+    } else if(frameCount % 360 >= 270) {
         
     } else {//defualt case, 90 > frameCount >= 0
         
@@ -36,7 +36,7 @@ function drawSquaresSquared(black) {
         
     for(var i = 0; i < width; i += size) {
         for(var j = 0; j < height; j += size) {
-            drawSquare(i * Math.SQRT2 + offset, j * Math.SQRT2 + offset, black);
+            drawSquare(i * Math.SQRT2 + offset - 1/2, j * Math.SQRT2 + offset - 1/2, black);
         }
     }
     
@@ -45,7 +45,7 @@ function drawSquare(x, y, black) {
     push();
     
     translate(x,y);
-    rotate(frameCount + 5 * 9);
+    rotate(frameCount + 45);
     
     if (black) {
        fill(0); 
