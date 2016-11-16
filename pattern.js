@@ -47,8 +47,8 @@ function drawSquare(x, y, black) {
     
     if (black) {
        fill(0); 
-       x += size % 90;
-       y += size % 90;
+       x += size / 90;
+       y += size / 90;
     } else {
        fill(255);
     }
