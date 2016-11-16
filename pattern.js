@@ -44,14 +44,18 @@ function drawSquaresSquared(black) {
 function drawSquare(x, y, black) {
     push();
     
-    translate(x + frameCount,y + frameCount);
-    rotate(frameCount + 45);
-    
     if (black) {
        fill(0); 
+       x += frameCount;
+       y += frameCount;
     } else {
        fill(255);
     }
+    
+    translate(x, y);
+    rotate(frameCount + 45);
+    
+    
     
     
     rect(0,0,size, size);
