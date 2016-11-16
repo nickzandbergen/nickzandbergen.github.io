@@ -18,16 +18,16 @@ function draw() {
         drawSquaresSquared(false);
     } else if(frameCount % 360 >= 180) {
         background(0);
-        drawSquaresSquared(true);
         drawSquaresSquared(false);
+        drawSquaresSquared(true);
     } else if(frameCount % 360 >= 270) {
         background(255);
         drawSquaresSquared(true);
         drawSquaresSquared(false);
     } else {//defualt case, 90 > frameCount >= 0
         background(0);
-        drawSquaresSquared(true);
         drawSquaresSquared(false);
+        drawSquaresSquared(true);
     }
 
 } 
