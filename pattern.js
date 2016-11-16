@@ -12,6 +12,23 @@ function setup() {
 
 function draw() {
     
+    var black = true;
+    
+    if(frameCount % 90 == 0) {
+        if (black) {
+            background(255);  
+        } else {
+            background(0);   
+        }
+        
+        background(128);
+        
+        drawSqauresSquared(black);
+        drawSquaresSquared(!black);
+        
+        black = !black;
+    }
+    
     if(frameCount % 360 >= 90) {
         background(128);
         drawSquaresSquared(true);
