@@ -12,17 +12,17 @@ function setup() {
 
 function draw() {
     
-    if(frameCount % 361 > 90) {
+    if(frameCount % 361 >= 90) {
         background(255);
         drawSquaresSquared(true);
         drawSquaresSquared(false);
-    } else if(frameCount % 361 > 180) {
+    } else if(frameCount % 361 >= 180) {
         background(0);
         drawSquaresSquared(false);
         drawSquaresSquared(true);
-    } else if(frameCount % 361 > 270) {
+    } else if(frameCount % 361 >= 270) {
         
-    } else {//defualt case
+    } else {//defualt case, 90 < frameCount <= 0
         
     }
 
