@@ -12,14 +12,18 @@ function setup() {
 
 function draw() {
     
-    if(frameCount % 180 > 90) {
+    if(frameCount % 361 > 90) {
         background(255);
         drawSquaresSquared(true);
         drawSquaresSquared(false);
-    } else {
+    } else if(frameCount % 361 > 180) {
         background(0);
         drawSquaresSquared(false);
         drawSquaresSquared(true);
+    } else if(frameCount % 361 > 270) {
+        
+    } else {//defualt case
+        
     }
 
 } 
@@ -49,8 +53,8 @@ function drawSquare(x, y, black) {
        fill(255);
     }
     
-    var local_size = size * (.9 + (.1 * (Math.abs(45 - frameCount % 90)))/45);
-    rect(0,0,local_size, local_size);
+    
+    rect(0,0,size, size);
     
     pop();
     
