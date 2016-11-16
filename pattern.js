@@ -1,4 +1,4 @@
-var squares = 9;//change this! 
+var squares = 3;//change this! 
 var size;
 
 
@@ -36,7 +36,7 @@ function drawSquaresSquared(black) {
         
     for(var i = 0; i < width; i += size) {
         for(var j = 0; j < height; j += size) {
-            drawSquare(i * Math.SQRT2 + offset - 1/2, j * Math.SQRT2 + offset - 1/2, black);
+            drawSquare(i * Math.SQRT2 + offset - 1, j * Math.SQRT2 + offset - 1, black);
         }
     }
     
