@@ -43,10 +43,6 @@ function drawSquaresSquared(black) {
         for(var j = 0; j < squares; j += 1) {
             x = i * size * Math.SQRT2;
             y = j * size * Math.SQRT2;
-            if (black && frameCount % 90 == 0) {
-                x += (frameCount * size) / 90;
-                y += (frameCount * size) / 90;
-            }
             drawSquare(x, y, black);
         }
     }
@@ -58,6 +54,11 @@ function drawSquare(x, y, black) {
     
     if (black) {
        fill(0); 
+       
+       if (frameCount % 90 == 0) {
+           x += (frameCount * size) / 90;
+           y += (frameCount * size) / 90;
+       }
     } else {
        fill(255);
     }
