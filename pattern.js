@@ -57,13 +57,6 @@ function drawSquare(x, y, black) {
        fill(255);
     }
     
-    
-    if (x < width) {
-        x = 0; 
-    } else if (y < height) {
-        y = 0;   
-    }
-    
     translate(x, y);
     
     rotate(frameCount + 45);
