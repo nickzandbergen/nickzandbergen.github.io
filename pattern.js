@@ -21,13 +21,9 @@ function draw() {
         drawSquaresSquared(false);
         drawSquaresSquared(true);
     //} else if(frameCount % 360 >= 270) {
-        background(255);
-        drawSquaresSquared(true);
-        drawSquaresSquared(false);
+        
     //} else {//defualt case, 90 > frameCount >= 0
-        background(0);
-        drawSquaresSquared(false);
-        drawSquaresSquared(true);
+        
     }
 
 } 
@@ -45,6 +41,7 @@ function drawSquaresSquared(black) {
     }
     
 }
+
 function drawSquare(x, y, black) {
     push();
     
@@ -64,9 +61,6 @@ function drawSquare(x, y, black) {
     
     translate(x, y);
     rotate(frameCount + 45);
-    
-    
-    
     
     rect(0,0,size, size);
     
