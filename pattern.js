@@ -52,11 +52,14 @@ function drawSquare(x, y, black) {
        fill(0); 
        x += size % 90;
        y += size % 90;
-        
-       x %= width;
-       y %= height;
     } else {
        fill(255);
+    }
+    
+    if (x + size / 2 > width) {
+        x = 0; 
+    } else if (y + size / 2 < height) {
+        y = 0;   
     }
     
     translate(x, y);
