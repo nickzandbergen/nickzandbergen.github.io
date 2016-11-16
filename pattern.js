@@ -58,7 +58,7 @@ function drawSquare(x, y, black) {
     
     if (x + size / 2 > width) {
         x = 0; 
-    } else if (y + size / 2 < height) {
+    } else if (y + size / 2 > height) {
         y = 0;   
     }
     
