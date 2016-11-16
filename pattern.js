@@ -51,8 +51,8 @@ function drawSquare(x, y, black) {
     
     if (black) {
        fill(0); 
-       x += frameCount;
-       y += frameCount;
+       x += (frameCount * size) / 90;
+       y += (frameCount * size) / 90;
     } else {
        fill(255);
     }
