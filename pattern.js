@@ -40,7 +40,7 @@ function drawSquaresSquared(black) {
         
     for(var i = 0; i < squares; i += 1) {
         for(var j = 0; j < squares; j += 1) {
-            drawSquare(i * size * Math.SQRT2 + offset, j * size * Math.SQRT2 + offset, black);
+            drawSquare(i * size * Math.SQRT2, j * size * Math.SQRT2, black);
         }
     }
     
