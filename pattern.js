@@ -1,5 +1,6 @@
 var squares = 8;//change this! 
 var size;
+var black = true;
 
 
 function setup() {
@@ -11,25 +12,20 @@ function setup() {
 }
 
 function draw() {
-    
-    var black = true;
-    
     if(frameCount % 90 == 0) {
         if (black) {
-            background(255);  
+            background(255);
         } else {
             background(0);   
         }
         
         background(128);
         
-        
-        
         black = !black;
     }
     
     drawSqauresSquared(black);
-        drawSquaresSquared(!black);
+    drawSquaresSquared(!black);
 
 } 
 
