@@ -45,7 +45,7 @@ function drawSquare(x, y, black) {
     push();
     
     translate(x,y);
-    rotate(frameCount);
+    rotate(frameCount + 5 * 9);
     
     if (black) {
        fill(0); 
