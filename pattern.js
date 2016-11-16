@@ -12,15 +12,15 @@ function setup() {
 
 function draw() {
     
-    if(frameCount % 360 > 90) {
+    if(frameCount % 360 >= 90) {
         background(255);
         drawSquaresSquared(true);
         drawSquaresSquared(false);
-    } else if(frameCount % 360 > 180) {
+    } else if(frameCount % 360 >= 180) {
         background(0);
         drawSquaresSquared(false);
         drawSquaresSquared(true);
-    } else if(frameCount % 360 > 270) {
+    } else if(frameCount % 360 >= 270) {
         
     } else {//defualt case, 90 < frameCount <= 0
         
