@@ -34,9 +34,9 @@ function drawSquaresSquared(black) {
     if(!black)
         offset = size / Math.SQRT2;
         
-    for(var i = 0; i < width; i += size * Math.SQRT2) {
-        for(var j = 0; j < height; j += size * Math.SQRT2) {
-            drawSquare(i + offset, j + offset, black);
+    for(var i = 0; i < width; i += size) {
+        for(var j = 0; j < height; j += size) {
+            drawSquare(i * Math.SQRT2 + offset, j * Math.SQRT2 + offset, black);
         }
     }
     
