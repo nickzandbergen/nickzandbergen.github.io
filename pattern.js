@@ -21,11 +21,11 @@ function draw() {
         drawSquaresSquared(true);
         drawSquaresSquared(false);
     } else if(frameCount % 360 >= 270) {
-        background(128);
+        background(255);
         drawSquaresSquared(true);
         drawSquaresSquared(false);
     } else {//defualt case, 90 > frameCount >= 0
-        background(128);
+        background(0);
         drawSquaresSquared(true);
         drawSquaresSquared(false);
     }
@@ -50,8 +50,8 @@ function drawSquare(x, y, black) {
     
     if (black) {
        fill(0); 
-       x += frameCount;
-       y += frameCount;
+       x += frameCount * 2;
+       y += frameCount * 2;
         
        x %= width;
        y %= height;
