@@ -1,6 +1,5 @@
 var squares = 8;//change this! 
 var size;
-var black = true;
 
 
 function setup() {
@@ -12,20 +11,24 @@ function setup() {
 }
 
 function draw() {
-    if(frameCount % 90 == 0) {
-        if (black) {
-            background(255);
-        } else {
-            background(0);   
-        }
-        
-        background(128);
-        
-        black = !black;
-    }
     
-    drawSqauresSquared(black);
-    drawSquaresSquared(!black);
+    if(frameCount % 360 <= 90) {
+        background(128);
+        drawSquaresSquared(true);
+        drawSquaresSquared(false);
+    } else if(frameCount % 360 <= 180) {
+        background(128);
+        drawSquaresSquared(false);
+        drawSquaresSquared(true);
+    } else if(frameCount % 360 <= 270) {
+        background(128);
+        drawSquaresSquared(true);
+        drawSquaresSquared(false);
+    } else {//defualt case, 90 < frameCount % 360 >= 0
+        background(128);
+        drawSquaresSquared(false);
+        drawSquaresSquared(true);
+    }
 
 } 
 
