@@ -14,7 +14,7 @@ function draw() {
     
     if(frameCount % 360 <= 90) {
         background(255);
-        drawSquaresSquared(true, true);
+        drawSquaresSquared(true);
         drawSquaresSquared(false);
     } else if(frameCount % 360 <= 180) {
         background(0);
@@ -33,28 +33,31 @@ function draw() {
 } 
 
 
-function drawSquaresSquared(black, slide=false) {
+function drawSquaresSquared(black) {
+    var x = 0, y = 0;
     var offset = 0;
     if(!black)
         offset = size / Math.SQRT2;
         
     for(var i = 0; i < squares; i += 1) {
         for(var j = 0; j < squares; j += 1) {
-            drawSquare(i * size * Math.SQRT2, j * size * Math.SQRT2, black, slide);
+            x = i * size * Math.SQRT2;
+            y = j * size * Math.SQRT2;
+            if (black) {
+                x += (frameCount * size) / 90;
+                y += (frameCount * size) / 90;
+            }
+            drawSquare(x, y, black);
         }
     }
     
 }
 
-function drawSquare(x, y, black, slide=false) {
+function drawSquare(x, y, black) {
     push();
     
     if (black) {
        fill(0); 
-       if (slide) {
-           x += (frameCount * size) / 90;
-           y += (frameCount * size) / 90;
-       }
     } else {
        fill(255);
     }
