@@ -1,4 +1,4 @@
-var squares = 20;//change this! 
+var squares = 16;//change this! 
 var size;
 
 
