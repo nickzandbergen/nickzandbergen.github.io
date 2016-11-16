@@ -24,7 +24,7 @@ function draw() {
         background(128);
         drawSquaresSquared(true);
         drawSquaresSquared(false);
-    } else {//defualt case, 90 > frameCount >= 0
+    } else {//defualt case, 90 > frameCount % 360 >= 0
         background(128);
         drawSquaresSquared(false);
         drawSquaresSquared(true);
