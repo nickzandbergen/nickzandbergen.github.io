@@ -46,6 +46,11 @@ function drawSquaresSquared(black) {
             if (black) {
                 x += (frameCount * size) / 90;
                 y += (frameCount * size) / 90;
+                if (x > width) {
+                    x = width - x;
+                } else if (y > height) {
+                    y = height - y;
+                }
             }
             drawSquare(x, y, black);
         }
