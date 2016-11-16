@@ -50,8 +50,8 @@ function drawSquare(x, y, black) {
     
     if (black) {
        fill(0); 
-       x += frameCount * 2;
-       y += frameCount * 2;
+       x += frameCount;
+       y += frameCount;
         
        x %= width;
        y %= height;
