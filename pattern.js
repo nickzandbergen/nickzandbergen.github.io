@@ -44,7 +44,7 @@ function drawSquaresSquared(black) {
 function drawSquare(x, y, black) {
     push();
     
-    translate(x,y);
+    translate(x + frameCount,y + frameCount);
     rotate(frameCount + 45);
     
     if (black) {
