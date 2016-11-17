@@ -53,16 +53,19 @@ function drawSquare(x, y, black) {
     push();
     
     if (black) {
-       fill(0); 
-       x += (frameCount * size) / 90;
-       y += (frameCount * size) / 90;
+       fill(0);
     } else {
        fill(255);
     }
     
     translate(x, y);
     
-    rotate(frameCount + 45);
+    if (frameCount % 90 == 0 && black) {
+       x += (frameCount * size) / 90;
+       y += (frameCount * size) / 90;
+   } else {
+       rotate(frameCount + 45)
+   }
     
     rect(0,0,size, size);
     
