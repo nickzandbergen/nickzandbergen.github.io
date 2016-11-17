@@ -61,6 +61,7 @@ function drawSquare(x, y, black) {
     translate(x, y);
     
     if (frameCount % 180 <= 90) {
+       rotate(45);
        if (black) {
            x += (frameCount * size) / 90;
            y += (frameCount * size) / 90;
