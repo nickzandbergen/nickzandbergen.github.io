@@ -58,8 +58,6 @@ function drawSquare(x, y, black) {
        fill(255);
     }
     
-    translate(x, y);
-    
     if (frameCount % 180 <= 90) {
        rotate(45);
        if (black) {
@@ -69,6 +67,8 @@ function drawSquare(x, y, black) {
    } else {
        rotate(frameCount + 45);
    }
+    
+   translate(x, y);
     
     rect(0,0,size, size);
     
