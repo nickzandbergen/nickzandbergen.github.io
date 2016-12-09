@@ -1,9 +1,9 @@
-var squares = 8;//change this! 
+var squares = 8; //change this
 var size;
 
 
 function setup() {
-    createCanvas(1080, 720);
+    createCanvas(1080, 1080);
     noStroke();
     angleMode(DEGREES);
     rectMode(CENTER);
@@ -11,67 +11,50 @@ function setup() {
 }
 
 function draw() {
-    
-    if(frameCount % 360 <= 90) {
-        background(0);
-        drawSquaresSquared(true);
-        drawSquaresSquared(false);
-    } else if(frameCount % 360 <= 180) {
-        background(255);
-        drawSquaresSquared(false);
-        drawSquaresSquared(true);
-    } else if(frameCount % 360 <= 270) {
-        background(0);
-        drawSquaresSquared(true);
-        drawSquaresSquared(false);
-    } else {//defualt case, 90 < frameCount % 360 >= 0
-        background(255);
-        drawSquaresSquared(false);
-        drawSquaresSquared(true);
-    }
+    N = frameCount % 360
+    for(var x = 0; x < 
+        
 
 } 
 
 
-function drawSquaresSquared(black) {
-    var x = 0, y = 0;
-    var offset = 0;
-    if(!black)
-        offset = size / Math.SQRT2;
-        
-    for(var i = 0; i < squares; i += 1) {
-        for(var j = 0; j < squares; j += 1) {
-            x = i * size * Math.SQRT2;
-            y = j * size * Math.SQRT2;
-            drawSquare(x, y, black);
-        }
-    }
-    
-}
 
-function drawSquare(x, y, black) {
+function drawSquare(x, y, grayscale, rotation) {
     push();
     
-    if (black) {
-       fill(0);
-    } else {
-       fill(255);
-    }
-    
-    if (frameCount % 180 <= 90) {
-       rotate(45);
-       if (black) {
-           x += (frameCount * size) / 90;
-           y += (frameCount * size) / 90;
-       }
-   } else {
-       rotate(frameCount + 45);
-   }
-    
-   translate(x, y);
-    
+    fill(grayscale);
+    translate(x, y);
+    rotate(rotation);
     rect(0,0,size, size);
     
     pop();
     
 }
+/*
+
+N = frameCount % 360 
+IF N % 90 == 0
+ default square grid / diagonal?
+
+N <= 180 // rotation
+ N <= 90 // WHITE squares
+
+ else //BLACK square 
+
+else //lines
+  N %= 180
+
+  N <= 90
+     checkerboard -> lines
+
+  else
+    lines -> checkerboard
+
+function parameters:
+x, y, grayscale, angle(boolean)
+
+//translate (x,y)
+rotate to angle
+//color square grayscale
+
+*/
