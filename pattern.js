@@ -9,8 +9,8 @@ function setup() {
 
 function draw() {
     var size = mag(mouseX - pmouseX, mouseY - pmouseY);
-    if(size > 200)
-        size = 200;
+    if(size > 90)
+        size = 90;
     
     var red = map(mouseX, 0, width, 0, 255);
     var grn = map(mouseY, 0, height, 0, 255);
