@@ -16,7 +16,7 @@ function draw() {
 
 } 
 function mousePressed() {
-    
+    fill((mouseX + mouseY) % 255);
     ellipse(mouseX, mouseY, 45, 45);
     
     return false;
