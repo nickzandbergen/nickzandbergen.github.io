@@ -11,14 +11,11 @@ function setup() {
 }
 
 function draw() {
-  
+  if(mouseIsPressed)
+  {
+    fill((mouseX + mouseY) % 255);
+    ellipse(mouseX, mouseY, 45, 45);
+  }
         
 
 } 
-function mouseIsPressed() {
-    fill((mouseX + mouseY) % 255);
-    ellipse(mouseX, mouseY, 45, 45);
-    
-    return false;
-    
-}
