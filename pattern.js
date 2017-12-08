@@ -3,13 +3,13 @@ var distMax;
 function setup() {
     createCanvas(1920, 1080);
     noStroke();
-    frameRate(48);
+    frameRate(72);
     distMax = mag(width/2, height/2);
 }
 
 function draw() {
     var size = mag(mouseX - pmouseX, mouseY - pmouseY);
-    size = size%100 + 20;
+    size = Math.sqrt(size);
     
     var red = map(mouseX, 0, width, 0, 255);
     var grn = map(mouseY, 0, height, 0, 255);
