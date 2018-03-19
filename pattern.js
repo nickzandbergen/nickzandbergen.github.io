@@ -9,7 +9,7 @@ function setup() {
 
 function draw() {
     var size = mag(mouseX - pmouseX, mouseY - pmouseY);
-    //size = Math.sqrt(size);
+    size = Math.max(size,100);
     
     var red = map(mouseX, 0, width, 0, 255);
     var grn = map(mouseY, 0, height, 0, 255);
