@@ -1,7 +1,7 @@
 var distMax;
 
 function setup() {
-    createCanvas(1920, 1080);
+    createCanvas(window.innerWidth, window.innerHeight);
     noStroke();
     frameRate(72);
     distMax = mag(width/2, height/2);
