@@ -1,7 +1,7 @@
 var distMax;
 
 function setup() {
-    createCanvas(window.innerWidth, window.innerHeight);
+    createCanvas(window.innerWidth - 25, window.innerHeight - 25);
     noStroke();
     frameRate(72);
     distMax = mag(width/2, height/2);
@@ -9,7 +9,7 @@ function setup() {
 
 function draw() {
     var size = mag(mouseX - pmouseX, mouseY - pmouseY);
-    size = Math.max(size,100);
+    size = Math.min(size + 20,150);
     
     var red = map(mouseX, 0, width, 0, 255);
     var grn = map(mouseY, 0, height, 0, 255);
