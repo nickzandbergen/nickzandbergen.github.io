@@ -1,3 +1,5 @@
+'use strict';
+
 var gl;
 
 function main() {
@@ -19,7 +21,11 @@ function main() {
       [0, 0, 0, 0, 0, 0],
    ];
 
-   var updateFn = push_relabel(entrances, exits, paths)
+   var updateFn = push_relabel(entrances, exits, paths);
+   let i = 0;
+   while( updateFn()) {
+      console.log(i++);
+   }
 }
 
 function resizeCanvas() {

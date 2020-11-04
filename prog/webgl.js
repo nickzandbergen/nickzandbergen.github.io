@@ -1,10 +1,12 @@
-fragment_shader_source = `
+'use strict';
+
+const fragment_shader_source = `
     void main() {
       gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
     }
 `;
 
-vertex_shader_source = `
+const vertex_shader_source = `
     attribute vec4 aVertexPosition;
 
     uniform mat4 uModelViewMatrix;
@@ -14,7 +16,6 @@ vertex_shader_source = `
       gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
     }
 `;
-
 
 function setup() {
   gl = canvas.getContext("webgl2");
