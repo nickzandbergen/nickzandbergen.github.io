@@ -1,7 +1,7 @@
 'use strict';
 
-function push_relabel(entrances, exits, path) {
-   const vertices = path.length;
+function push_relabel(sources, sinks, adjacency) {
+   const vertices = adjacency.length;
 
    let helper = Array.from(new Array(vertices).keys());
 
@@ -13,53 +13,49 @@ function push_relabel(entrances, exits, path) {
    // console.log("Height", height)
    // console.log("Excess", excess)
    // console.log("Flow", flow)
-   // console.log("Path", path)
-
-   let deltas = [];
+   // console.log("adjacency", adjacency)
 
    //remove antiparallel edges
    for (let v = 0; v < vertices; v++) {
       for (let u = 0; u < v; u++) {
-         if (path[v][u]) {
-            flow[u][v] += path[v][u];
-            path[u][v] += path[v][u];
-            path[v][u] = 0;
+         if (adjacency[v][u]) {
+            flow[u][v] += adjacency[v][u];
+            adjacency[u][v] += adjacency[v][u];
+            adjacency[v][u] = 0;
          }
       }
    }
 
+   // topo sort here?
+
    function getNeighbors(u) {
       let a = [];
       for (let v = 0; v < vertices; v++) {
-         if (path[u][v] || path[v][u]) {
+         if (adjacency[u][v] || adjacency[v][u]) {
             a.push(v);
          }
       }
       return a;
    }
    
-   //[i for i in range(vertices) if not (i in exits or i in entrances)]
-   let nodes = helper.filter((v, i) => !(exits.includes(i) || entrances.includes(i)));
+   let nodes = helper.filter((v, i) => !(sinks.includes(i) || sources.includes(i)));
 
-   // [[v for v in range(vertices) if path[u][v] or path[v][u]] for u in range(vertices)]
    let neighbors = helper.map(getNeighbors);
 
-   console.log("neighbors", neighbors);
-
    //saturate edges out of sources
-   for (let e of entrances) {
+   for (let e of sources) {
       height[e] = vertices;
       for (let v of neighbors[e]) {
-         excess[v] += path[e][v] - flow[e][v];
-         flow[e][v] = path[e][v];
+         excess[v] += adjacency[e][v] - flow[e][v];
+         flow[e][v] = adjacency[e][v];
       }
    }
 
    //functions
    function push(u, v) {
       let m = 0;
-      if (path[u][v]) {
-         m = Math.min(excess[u], path[u][v] - flow[u][v]);
+      if (adjacency[u][v]) {
+         m = Math.min(excess[u], adjacency[u][v] - flow[u][v]);
          flow[u][v] += m;
       } else {
          //pushing back against the flow
@@ -67,25 +63,28 @@ function push_relabel(entrances, exits, path) {
          flow[v][u] -= m;
       }
       console.log("Pushing",m, u, "->", v);
+      // delta here
+
       excess[u] -= m;
       excess[v] += m;
    }
 
    function relabel(u) {
       let min = Math.min(
-         ...neighbors[u].filter((v) => path[u][v] - flow[u][v] || flow[v][u]).map((v) => height[v])
+         ...neighbors[u].filter((v) => adjacency[u][v] - flow[u][v] || flow[v][u]).map((v) => height[v])
       );
+
       console.log("relabeled",u,"to",min+1);
+      
+      
       height[u] = 1 + min;
    }
 
    function discharge(u) {
-      // need to record deltas here
-      // and return
       console.log("discharging", u, "excess:", excess[u]);
       while (excess[u] > 0) {
          for (let v of neighbors[u]) {
-            if (height[u] == height[v] + 1 && (path[u][v] - flow[u][v] || flow[v][u])) {
+            if (height[u] == height[v] + 1 && (adjacency[u][v] - flow[u][v] || flow[v][u])) {
                push(u, v);
             }
             if (excess[u] <= 0) {
@@ -102,8 +101,7 @@ function push_relabel(entrances, exits, path) {
    }
    let n = 0;
 
-   let f = function get_deltas() {
-      deltas = [];
+   let f = function add_deltas() {
       while (n < nodes.length) {
          let u = nodes[n];
          let old_height = height[u];
@@ -112,24 +110,29 @@ function push_relabel(entrances, exits, path) {
 
             console.log("height change: ", height[u] - old_height);
             
-            nodes.unshift(0, nodes.pop(n));
+            nodes.unshift(nodes.pop(n));
+
             n = 0;
+            
+            
             // need to represent deltas here somehow?
             
             return true;
          } else {
             n += 1;
          }
+         
+         console.log("Height", height)
+         console.log("Excess", excess)
+         console.log("Flow", flow)
+         console.log("adjacency", adjacency)
+         console.log("Nodes", nodes)
       }
 
-      console.log("Height", height)
-      console.log("Excess", excess)
-      console.log("Flow", flow)
-      console.log("Path", path)
       return false;
    };
 
-   // return exits.map((x) => excess[x]).reduce(a, (b) => a + b);
+   // return sinks.map((x) => excess[x]).reduce(a, (b) => a + b);
    // need to return a function that generates the next delta
    return f;
 }
