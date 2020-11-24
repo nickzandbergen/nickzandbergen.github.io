@@ -3,34 +3,26 @@
 var gl; // WebGL context
 var graph; // graph object
 
+// closure!
+var scene_render = (function () {
+   var start;
 
-let start;
+   return function (time) {
+      if (start === undefined)
+         start = time;
+      const elapsed = time - start;
+      start = time
 
-
-function scene_render(time) {
-   if (start === undefined)
-      start = time;
-   const elapsed = time - start;
-   start = time
-   
-   graph.step(elapsed)
-
-   requestAnimationFrame(scene_render);
-
-}
+      graph.step(elapsed)
+      requestAnimationFrame(scene_render);
+   }
+})();
 
 function main() {
-   // gl = canvas.getContext("webgl2");
-   const ctx = canvas.getContext('2d');
-   console.log(ctx)
-   ctx.fillStyle = 'blue';
-   ctx.fillRect(0, 0, canvas.width, canvas.height);
-   ctx.stroke()
-   return
+   setup();
 
-
-   // resizeCanvas();
-   // clearCanvas();
+   resizeCanvas();
+   clearCanvas();
 
    // call w/ testcase
    // should replace with user input sometime
@@ -45,30 +37,31 @@ function main() {
       [0, 0, 0, 0, 0, 0],
    ];
 
-   graph = new Graph_GL(entrances, exits, paths)
-
-   var updateFn = push_relabel(entrances, exits, paths);
-   let d = []
-   let i = 0;
-
-   do {
-      d = updateFn()
-      console.log(i++, d);
-      if(i > 100) {
-         break
-      }
-      // maybe wait on a button or something here
-      // graph.render()
-   } while (d);
+   graph = new MaxflowGraphGL(entrances, exits, paths)
 
    // window.requestAnimationFrame(scene_render)
+
+   //let's set up a sample point
+   let pointsBuf = gl.createBuffer();
+   let points = [0.0, 0.0, 0.0]; //need populate
+
+   let attribPointer = gl.getAttribLocation(gl.program, "aVertexPosition");
+   
+   gl.bindBuffer(gl.ARRAY_BUFFER, pointsBuf);
+   gl.bufferData(gl.ARRAY_BUFFER, points, gl.STATIC_DRAW)
+
+   gl.vertexAttribPointer(attribPointer, 3, gl.FLOAT, false, 0, 0);
+   gl.enableVertexAttribArray(attribPointer);
+
+   //error from here: no valid shader
+   gl.drawArrays(gl.POINTS, 0, points.length)
 
 }
 
 function resizeCanvas() {
    canvas.height = document.body.clientHeight;
    canvas.width = document.body.clientWidth;
-   // gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+   gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 }
 
 function clearCanvas() {
