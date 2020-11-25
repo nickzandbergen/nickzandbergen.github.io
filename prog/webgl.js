@@ -6,26 +6,26 @@
 const vertex_shader_source = `
     attribute vec3 aVertexPosition;
 
+    uniform mat4 camera;
+
     void main() {
-      gl_Position = vec4(aVertexPosition, 1.0);
-      gl_PointSize = 1.0;
+      gl_Position = camera * vec4(aVertexPosition, 1.0);
+      gl_PointSize = 75.0;
     }
 `;
-// float dist = distance(gl_PointCoord, vec2(0.5));
-// float alpha = 1.0 - smoothstep(0.45, 0.5, dist);
-// gl_FragColor = vec4(1.0, 1.0, 1.0, alpha)
+
 const fragment_shader_source = `
     precision mediump float;
     void main() {
-      gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+      float dist = distance(gl_PointCoord, vec2(0.5));
+      float alpha = 1.0 - smoothstep(0.45, 0.5, dist);
+      gl_FragColor = vec4(1.0, 1.0, 1.0, alpha);
     }
 `;
 
 function setup() {
   gl = canvas.getContext("webgl2");
   gl.program = initShaders(gl, vertex_shader_source, fragment_shader_source)
-
-  console.log(gl.program)
 
   //set anti-alias
   let aa_loc = gl.getUniformLocation(gl.program, "antialiased")
@@ -40,12 +40,6 @@ function setup() {
 function initShaders(gl, vsSource, fsSource) {
   const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource);
   const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
-
-  console.log(gl.getError());
-  console.log(gl.getShaderInfoLog(vertexShader))
-  console.log(gl.getShaderInfoLog(fragmentShader))
-
-
 
   if (!vertexShader || !fragmentShader) {
     console.log("Null shaders")
@@ -62,9 +56,6 @@ function initShaders(gl, vsSource, fsSource) {
   //attach
   gl.attachShader(shaderProgram, vertexShader);
   gl.attachShader(shaderProgram, fragmentShader);
-
-  gl.fshader = fragmentShader;
-  gl.vshader = vertexShader;
 
   //link
   gl.linkProgram(shaderProgram);

@@ -41,9 +41,24 @@ function main() {
 
    // window.requestAnimationFrame(scene_render)
 
-   //let's set up a sample point
+
+   let camera_loc = gl.getUniformLocation(gl.program, "camera");
+   let camera_mat = new Float32Array(16);
+   //init matrix
+   camera_mat[0] = 1.0;
+   camera_mat[5] = 1.0;
+   camera_mat[10] = 1.0;
+   camera_mat[15] = 1.0;
+
+   gl.uniformMatrix4fv(camera_loc, false, camera_mat);
+
+   //let's set up a sample points
    let pointsBuf = gl.createBuffer();
-   let points = [0.0, 0.0, 0.0]; //need populate
+
+   let points = new Float32Array([0.5, 0.0, 0.5,
+                                  0.0, 0.0, 0.0]); //need populate
+   
+   console.log(points.length, points)
 
    let attribPointer = gl.getAttribLocation(gl.program, "aVertexPosition");
    
@@ -53,8 +68,7 @@ function main() {
    gl.vertexAttribPointer(attribPointer, 3, gl.FLOAT, false, 0, 0);
    gl.enableVertexAttribArray(attribPointer);
 
-   //error from here: no valid shader
-   gl.drawArrays(gl.POINTS, 0, points.length)
+   gl.drawArrays(gl.POINTS, 0, points.length/3)
 
 }
 
