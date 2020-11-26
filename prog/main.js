@@ -2,6 +2,10 @@
 
 var gl; // WebGL context
 var graph; // graph object
+var camera = {}; // deals with camera. basically a matrix + location
+
+//debug wheee
+var points;
 
 // closure!
 var scene_render = (function () {
@@ -13,13 +17,21 @@ var scene_render = (function () {
       const elapsed = time - start;
       start = time
 
-      graph.step(elapsed)
+      // graph.step(elapsed)
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.POINTS, 0, points.length/3)
+
+      let err = gl.getError()
+      if(err) {
+         console.log(err)
+      }
       requestAnimationFrame(scene_render);
    }
 })();
 
 function main() {
-   setup();
+   setupWebGL();
+   setupListeners();
 
    resizeCanvas();
    clearCanvas();
@@ -39,27 +51,20 @@ function main() {
 
    graph = new MaxflowGraphGL(entrances, exits, paths)
 
-   // window.requestAnimationFrame(scene_render)
-
-
-   let camera_loc = gl.getUniformLocation(gl.program, "camera");
-   let camera_mat = new Float32Array(16);
-   //init matrix
-   camera_mat[0] = 1.0;
-   camera_mat[5] = 1.0;
-   camera_mat[10] = 1.0;
-   camera_mat[15] = 1.0;
-
-   gl.uniformMatrix4fv(camera_loc, false, camera_mat);
-
    //let's set up a sample points
-   let pointsBuf = gl.createBuffer();
-
-   let points = new Float32Array([0.5, 0.0, 0.5,
-                                  0.0, 0.0, 0.0]); //need populate
    
+
+   points = new Float32Array([0.5, 0.0, 0.0,
+                             -0.5, 0.0, 0.0,
+                              0.0, 0.0, 0.5,
+                              0.0, 0.0,-0.5,
+                              0.0, 0.5, 0.0,
+                              0.0,-0.5, 0.0,
+                              0.0, 0.0, 0.0]);
+
    console.log(points.length, points)
 
+   let pointsBuf = gl.createBuffer();
    let attribPointer = gl.getAttribLocation(gl.program, "aVertexPosition");
    
    gl.bindBuffer(gl.ARRAY_BUFFER, pointsBuf);
@@ -70,6 +75,7 @@ function main() {
 
    gl.drawArrays(gl.POINTS, 0, points.length/3)
 
+   window.requestAnimationFrame(scene_render)
 }
 
 function resizeCanvas() {

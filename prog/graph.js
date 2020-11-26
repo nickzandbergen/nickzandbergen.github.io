@@ -124,12 +124,17 @@ class MaxflowGraphGL {
                 console.log("adjacency", adjacency)
                 console.log("Nodes", nodes)
             }
+            console.log(sinks.map((x) => excess[x]).reduce(a, (b) => a + b))
             this.done = true
             return false;
         };
 
         // webgl setup
-
+        this.nodeCoords = [];
+        
+        for(let i = 0; i < vertices; i++) {
+            
+        }
         
 
         // return sinks.map((x) => excess[x]).reduce(a, (b) => a + b); to actually print

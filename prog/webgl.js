@@ -10,7 +10,7 @@ const vertex_shader_source = `
 
     void main() {
       gl_Position = camera * vec4(aVertexPosition, 1.0);
-      gl_PointSize = 75.0;
+      gl_PointSize = 75.0 + 20.0 * aVertexPosition.x;
     }
 `;
 
@@ -19,11 +19,11 @@ const fragment_shader_source = `
     void main() {
       float dist = distance(gl_PointCoord, vec2(0.5));
       float alpha = 1.0 - smoothstep(0.45, 0.5, dist);
-      gl_FragColor = vec4(1.0, 1.0, 1.0, alpha);
+      gl_FragColor = vec4(gl_FragCoord.y, 1.0, 1.0, alpha);
     }
 `;
 
-function setup() {
+function setupWebGL() {
   gl = canvas.getContext("webgl2");
   gl.program = initShaders(gl, vertex_shader_source, fragment_shader_source)
 
@@ -31,10 +31,16 @@ function setup() {
   let aa_loc = gl.getUniformLocation(gl.program, "antialiased")
   gl.uniform1f(aa_loc, 1)
 
-  //blending, for points
+  //blending, for rounder points
   gl.enable(gl.BLEND);
-  gl.blendFuncSeparate( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA,gl.ZERO, gl.ONE );
+  gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ZERO, gl.ONE);
 
+  //camera matrix
+  camera.loc = gl.getUniformLocation(gl.program, "camera");
+  camera.mat = new Matrix4();
+  camera.mat.setIdentity();
+
+  gl.uniformMatrix4fv(camera.loc, false, camera.mat.elements);
 }
 
 function initShaders(gl, vsSource, fsSource) {
@@ -42,24 +48,23 @@ function initShaders(gl, vsSource, fsSource) {
   const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
 
   if (!vertexShader || !fragmentShader) {
-    console.log("Null shaders")
+    console.log("Shaders loading failed")
     return null;
   }
 
   const shaderProgram = gl.createProgram();
-  
-  if(!shaderProgram) {
-    console.log("Null program")
+
+  if (!shaderProgram) {
+    console.log("Shader program failed")
     return null;
   }
-  
-  //attach
+
   gl.attachShader(shaderProgram, vertexShader);
   gl.attachShader(shaderProgram, fragmentShader);
 
-  //link
   gl.linkProgram(shaderProgram);
   gl.useProgram(shaderProgram)
+
   // If creating the shader program failed, alert
   if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
     alert('Unable to initialize the shader program: ' + gl.getProgramInfoLog(shaderProgram));
