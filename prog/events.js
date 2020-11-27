@@ -5,7 +5,6 @@ function setupListeners() {
     */
     document.onpointerlockchange = (event) => {
         hasPointerLock = document.pointerLockElement === canvas || document.mozPointerLockElement === canvas
-        console.log('Pointer lock changed, now', hasPointerLock);
     };
     
     canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock;
@@ -24,8 +23,10 @@ function setupListeners() {
         if(!hasPointerLock) {
             return; 
         }
-        camera.mat.rotate(e.movementX, 0.0, 1.0, 0.0);
-        camera.mat.rotate(e.movementY, 1.0, 0.0, 0.0);
+        let vecY = [camera.mat.elements[1], camera.mat.elements[5], camera.mat.elements[9]]
+        let vecX = [camera.mat.elements[0], camera.mat.elements[4], camera.mat.elements[8]]
+        camera.mat.rotate(e.movementX, ...vecY);
+        camera.mat.rotate(e.movementY, ...vecX);
         gl.uniformMatrix4fv(camera.loc, false, camera.mat.elements);
     };
     

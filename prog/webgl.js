@@ -10,7 +10,7 @@ const vertex_shader_source = `
 
     void main() {
       gl_Position = camera * vec4(aVertexPosition, 1.0);
-      gl_PointSize = 75.0 + 20.0 * aVertexPosition.x;
+      gl_PointSize = 75.0 + 70.0 * aVertexPosition.x;
     }
 `;
 
@@ -18,8 +18,12 @@ const fragment_shader_source = `
     precision mediump float;
     void main() {
       float dist = distance(gl_PointCoord, vec2(0.5));
-      float alpha = 1.0 - smoothstep(0.45, 0.5, dist);
-      gl_FragColor = vec4(gl_FragCoord.y, 1.0, 1.0, alpha);
+      if(dist >= 0.50) {
+        discard;
+      } else {
+        float alpha = 1.0 - smoothstep(0.45, 0.5, dist);
+        gl_FragColor = vec4(gl_PointCoord.xy, 1.0, alpha);
+      }
     }
 `;
 
@@ -34,6 +38,10 @@ function setupWebGL() {
   //blending, for rounder points
   gl.enable(gl.BLEND);
   gl.blendFuncSeparate(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA, gl.ZERO, gl.ONE);
+
+  //depth!
+  gl.enable(gl.DEPTH_TEST);
+
 
   //camera matrix
   camera.loc = gl.getUniformLocation(gl.program, "camera");
