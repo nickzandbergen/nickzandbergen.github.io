@@ -7,28 +7,6 @@ var camera = {}; // deals with camera. basically a matrix + location
 //debug wheee
 var points;
 
-// closure!
-var scene_render = (function () {
-   var start;
-
-   return function (time) {
-      if (start === undefined)
-         start = time;
-      const elapsed = time - start;
-      start = time
-
-      // graph.step(elapsed)
-      gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.drawArrays(gl.POINTS, 0, points.length/3)
-
-      let err = gl.getError()
-      if(err) {
-         console.log(err)
-      }
-      requestAnimationFrame(scene_render);
-   }
-})();
-
 function main() {
    setupWebGL();
    setupListeners();
@@ -62,18 +40,19 @@ function main() {
                               0.0,-0.5, 0.0,
                               0.0, 0.0, 0.0]);
 
-   console.log(points.length, points)
-
    let pointsBuf = gl.createBuffer();
-   let attribPointer = gl.getAttribLocation(gl.program, "aVertexPosition");
+  
+   
    
    gl.bindBuffer(gl.ARRAY_BUFFER, pointsBuf);
    gl.bufferData(gl.ARRAY_BUFFER, points, gl.STATIC_DRAW)
+   gl.vertexAttribPointer(gl.loc.pPos, 3, gl.FLOAT, false, 0, 0);
+   gl.enableVertexAttribArray(gl.loc.pPos);
 
-   gl.vertexAttribPointer(attribPointer, 3, gl.FLOAT, false, 0, 0);
-   gl.enableVertexAttribArray(attribPointer);
-
+   gl.uniform1f(gl.loc.points, 0)
    gl.drawArrays(gl.POINTS, 0, points.length/3)
+   gl.uniform1f(gl.loc.points, 1)
+   gl.drawArrays(gl.LINES, 0, points.length/3)
 
    window.requestAnimationFrame(scene_render)
 }

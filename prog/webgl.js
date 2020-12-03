@@ -3,26 +3,49 @@
 //going to need a uniform pointScale in here
 // attribute float pointSize;
 // and gl_PointSize = pointSize
-const vertex_shader_source = `
-    attribute vec3 aVertexPosition;
 
+
+/*
+  TODO:
+    support drawing camera-facing triangles
+    - requires storing center point
+      - then projecting center->vert vector onto xy plane
+      - ? maybe deal with textures
+
+
+*/
+const vertex_shader_source = `
+    uniform bool points; //true if drawing points
+
+    attribute vec3 aPointPosition; //position of vertex
     uniform mat4 camera;
 
     void main() {
-      gl_Position = camera * vec4(aVertexPosition, 1.0);
-      gl_PointSize = 75.0 + 70.0 * aVertexPosition.x;
+      if(points) {
+        gl_Position = camera * vec4(aPointPosition, 1.0);
+        gl_PointSize = 75.0 + 70.0 * aPointPosition.x;
+      } else { //drawing triangles
+        gl_Position = camera * vec4(aPointPosition, 1.0);
+      }
     }
 `;
 
 const fragment_shader_source = `
+    uniform bool points;
+
     precision mediump float;
+    
     void main() {
-      float dist = distance(gl_PointCoord, vec2(0.5));
-      if(dist >= 0.50) {
-        discard;
-      } else {
-        float alpha = 1.0 - smoothstep(0.45, 0.5, dist);
-        gl_FragColor = vec4(gl_PointCoord.xy, 1.0, alpha);
+      if(points) {
+        float dist = distance(gl_PointCoord, vec2(0.5));
+        if(dist >= 0.49) {
+          discard;
+        } else {
+          float alpha = 1.0 - smoothstep(0.45, 0.5, dist);
+          gl_FragColor = vec4(gl_PointCoord.xy, 1.0, alpha);
+        }
+      } else { //drawing triangles
+        gl_FragColor = vec4(1.0, 1.0, 0.0, 1.0);
       }
     }
 `;
@@ -30,6 +53,7 @@ const fragment_shader_source = `
 function setupWebGL() {
   gl = canvas.getContext("webgl2");
   gl.program = initShaders(gl, vertex_shader_source, fragment_shader_source)
+  gl.loc = {}
 
   //set anti-alias
   let aa_loc = gl.getUniformLocation(gl.program, "antialiased")
@@ -42,12 +66,13 @@ function setupWebGL() {
   //depth!
   gl.enable(gl.DEPTH_TEST);
 
+  //locations for webgl
+  gl.loc.pPos = gl.getAttribLocation(gl.program, "aPointPosition");
+  gl.loc.points = gl.getUniformLocation(gl.program, "points")
 
   //camera matrix
   camera.loc = gl.getUniformLocation(gl.program, "camera");
-  camera.mat = new Matrix4();
-  camera.mat.setIdentity();
-
+  camera.mat = new Matrix4().setIdentity();
   gl.uniformMatrix4fv(camera.loc, false, camera.mat.elements);
 }
 
@@ -95,7 +120,6 @@ function loadShader(gl, type, source) {
     gl.deleteShader(shader);
     return null;
   }
-
   return shader;
 }
 
