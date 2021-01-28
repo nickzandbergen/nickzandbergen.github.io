@@ -41,8 +41,6 @@ function main() {
                               0.0, 0.0, 0.0]);
 
    let pointsBuf = gl.createBuffer();
-  
-   
    
    gl.bindBuffer(gl.ARRAY_BUFFER, pointsBuf);
    gl.bufferData(gl.ARRAY_BUFFER, points, gl.STATIC_DRAW)

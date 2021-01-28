@@ -1,10 +1,11 @@
 'use strict';
 
+//note: connections/nodes are internal housekeeping classes
 class MaxflowGraphGL {
     /*
-     
         Class for managing maxflow and vis
     */
+
     static ANIMATION_DURATION = 5
 
     /* set things up */
@@ -12,14 +13,15 @@ class MaxflowGraphGL {
         this.changes = []
         this.done = false
 
-        const vertices = adjacency.length;
+        const vertices = adjacency.length; // number of vertices
 
-        { //convenient collapse point for me.
-            let helper = Array.from(new Array(vertices).keys());
-            let flow = helper.map((_) => new Uint16Array(vertices));
-            let height = new Uint16Array(vertices);
-            let excess = new Uint16Array(vertices);
 
+        let helper = Array.from(new Array(vertices).keys());
+        let flow = helper.map((_) => new Uint16Array(vertices));
+        let height = new Uint16Array(vertices);
+        let excess = new Uint16Array(vertices);
+
+        { // maxflow things
             //remove antiparallel edges
             for (let v = 0; v < vertices; v++) {
                 for (let u = 0; u < v; u++) {
@@ -127,12 +129,61 @@ class MaxflowGraphGL {
                 this.done = true
                 return false;
             };
+        }
 
-            // webgl setup
-            this.nodeCoords = [];
+        { // webgl setup
 
+            this.nodes = []
+
+            let sqrt_v = Math.ceil(Math.sqrt(vertices))
+
+            console.log(sqrt_v)
+
+            // node layout
+            let n = 0
+
+            // arr is a helper display
+            let arr = []
+            for(let i = 0; i < sqrt_v; i++) {
+                arr[i] = []
+            }
+
+            for (let target = 0; (target <= 2*(sqrt_v - 1)) && (n < vertices); target++) {
+                let i = Math.min(sqrt_v - 1, target)
+                let j = Math.max(0, target - (sqrt_v - 1))
+
+                while(i >= 0 && j < sqrt_v) {
+                    let x = (i * (1.0) ) / (sqrt_v) - 1.0;
+                    let y = 0.0
+                    let z = (i * (1.0) ) / (sqrt_v ) - 1.0;
+                    this.nodes.push(x,y,z)
+                    
+                    arr[i][j] = n
+                    i--
+                    j++
+
+                    n++
+                }
+
+                
+            }
+
+            console.log(arr)
+
+            // handle ,lines
+            this.nodeRefs = []; // nodes[i] = list of indices into LineArray where point i is
             for (let i = 0; i < vertices; i++) {
+                this.nodeRefs.push([])
+            }
+            console.log(adjacency)
+            for (let i = 0; i < vertices; i++) {
+                for (let j = i; j < vertices; j++) {
+                    console.log(i, j, adjacency[i][j])
+                    if (adjacency[i][j]) { // then there's a link between i,j
 
+                    }
+                }
+                console.log()
             }
         }
         // return sinks.map((x) => excess[x]).reduce(a, (b) => a + b); to actually print
@@ -180,10 +231,3 @@ Animations
 - Push: changes flow through a connection
 */
 
-class Connection {
-
-}
-
-class Node {
-
-}

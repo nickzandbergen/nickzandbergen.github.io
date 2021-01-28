@@ -18,14 +18,22 @@ const vertex_shader_source = `
     uniform bool points; //true if drawing points
 
     attribute vec3 aPointPosition; //position of vertex
+    attribute float aPointSize; // size of vert
+
+    attribute vec3 aLinePosition; // coords of lines
+    
     uniform mat4 camera;
 
     void main() {
       if(points) {
         gl_Position = camera * vec4(aPointPosition, 1.0);
         gl_PointSize = 75.0 + 70.0 * aPointPosition.x;
-      } else { //drawing triangles
+
+        gl_Position.z = (gl_Position.z - 1.0) / 2.0; // shift points in front
+      } else { //drawing lines
         gl_Position = camera * vec4(aPointPosition, 1.0);
+        
+        gl_Position.z = (gl_Position.z + 1.0) / 2.0; // and lines behind
       }
     }
 `;
@@ -44,7 +52,7 @@ const fragment_shader_source = `
           float alpha = 1.0 - smoothstep(0.45, 0.5, dist);
           gl_FragColor = vec4(gl_PointCoord.xy, 1.0, alpha);
         }
-      } else { //drawing triangles
+      } else { //drawing lines
         gl_FragColor = vec4(1.0, 1.0, 0.0, 1.0);
       }
     }
